@@ -49,8 +49,8 @@ def most_severe(issues: list) -> dict:
 async def handler():
 
     payload = await request.get_json()
-    if payload is None:
-        return {'message': 'not a valid webhook'}, 400, {}
+    # if payload is None:
+    #     return {'message': 'not a valid webhook'}, 400, {}
 
     signature = request.headers.get('X-Hub-Signature')
     
