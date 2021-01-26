@@ -4,7 +4,7 @@
 # content of the webhook into a parameter for use by a 
 # workflow.
 
-from relay_sdk import Interface, WebhookServer
+from relay_sdk import Interface, WebhookServer, Dynamic as D
 from quart import Quart, request, jsonify, make_response
 
 import logging
@@ -56,7 +56,7 @@ async def handler():
 
     signature = request.headers.get('X-Hub-Signature')
     
-    secret = relay.get('secret')
+    secret = relay.get(D.secret)
 
     if verify_signature(payload, secret, signature ) == False:
         return {'message': 'not secure webhook'}, 400, {}
