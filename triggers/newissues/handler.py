@@ -28,7 +28,6 @@ def verify_signature(payload, secret, signature):
     return signature == digest
 
 def v0_parse(payload) -> dict:
-    payload = json.loads(payload)
 
     payload['project_id'] = payload['project']['id']
     payload['project_name'] = payload['project']['name']
@@ -72,7 +71,7 @@ async def handler():
     else:
         return {'message': 'unsupported payload version'}, 400, {}
 
-    relay.events.emit({json.dumps(payload)})
+    relay.events.emit({payload})
 
     return {'message': 'success'}, 200, {}
 
