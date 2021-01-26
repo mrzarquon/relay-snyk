@@ -36,7 +36,9 @@ def v0_parse(payload) -> dict:
     payload['newIssues_count'] = len(payload['newIssues'])
 
     if payload['newIssues_count'] > 0:
-        payload['newIssues_worst'] = most_severe(payload['newIssues'])
+        payload['worst'] = most_severe(payload['newIssues'])
+    else:
+        payload['worst'] = 0
 
 
     return payload
