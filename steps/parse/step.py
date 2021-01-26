@@ -19,6 +19,7 @@ formatted_json = json.dumps(project, indent=4, sort_keys=True)
 logging.info("project info from snyk \n{}".format(formatted_json))
 
 logging.info("example secret {}".format(secret))
+
 if worst != 0:
     worst = json.dumps(worst, indent=4, sort_keys=True)
 
