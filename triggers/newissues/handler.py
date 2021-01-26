@@ -67,7 +67,7 @@ async def handler():
     else:
         return {'message': 'unsupported payload version'}, 400, {}
 
-    relay.events.emit({payload})
+    relay.events.emit({json.dumps(payload)})
 
     return {'message': 'success'}, 200, {}
 
