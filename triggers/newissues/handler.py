@@ -49,7 +49,7 @@ def most_severe(issues: list) -> dict:
 @app.route('/', methods=['POST'])
 async def handler():
 
-    logging.info("starting 2")
+    logging.info("starting 22")
     payload = await request.get_json()
     if payload is None:
         return {'message': 'not a valid webhook'}, 400, {}
