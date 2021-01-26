@@ -12,6 +12,8 @@ import json
 import hashlib
 import hmac
 
+logging.getLogger().setLevel(logging.INFO)
+
 relay = Interface()
 app = Quart('snyk-issues-filter')
 
@@ -51,6 +53,8 @@ async def handler():
     payload = await request.get_json()
     # if payload is None:
     #     return {'message': 'not a valid webhook'}, 400, {}
+
+    logging.info("Received the following webhook payload: \n%s", json.dumps(data, indent=4))
 
     signature = request.headers.get('X-Hub-Signature')
     
