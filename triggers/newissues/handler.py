@@ -55,7 +55,7 @@ async def handler():
     # if payload is None:
     #     return {'message': 'not a valid webhook'}, 400, {}
 
-    logging.info("Received the following webhook payload: \n%s", json.dumps(data, indent=4))
+    logging.info("Received the following webhook payload: \n%s", json.dumps(payload, indent=4))
 
     signature = request.headers.get('X-Hub-Signature')
     
