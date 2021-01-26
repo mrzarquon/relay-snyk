@@ -44,7 +44,7 @@ def v0_parse(payload) -> dict:
     return payload
 
 def most_severe(issues: list) -> dict:
-    worst = sorted(issues, key=lambda d: d['priorityScore'])[0]
+    worst = sorted(issues, key=lambda d: d['priorityScore'], reverse=True)[0]
     return worst
 
 
