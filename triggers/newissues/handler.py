@@ -58,12 +58,12 @@ async def handler():
 
     signature = request.headers.get('X-Hub-Signature')
     
-    secret = relay.get(D.secret)
+    # secret = relay.get(D.secret)
 
-    if verify_signature(payload, secret, signature ) == False:
-        return {'message': 'not secure webhook'}, 400, {}
-    else:
-        logging.info("Valid checksum of: %s", signature)
+    # if verify_signature(payload, secret, signature ) == False:
+    #     return {'message': 'not secure webhook'}, 400, {}
+    # else:
+    #     logging.info("Valid checksum of: %s", signature)
 
     eventtype = request.headers.get('X-Snyk-Event')
     eventtype , eventvers = eventtype.split('/')
