@@ -4,7 +4,7 @@
 # content of the webhook into a parameter for use by a 
 # workflow.
 
-from relay_sdk import Interface, WebhookServer
+from relay_sdk import Interface, WebhookServer, Dynamic as D
 from quart import Quart, request, jsonify, make_response
 
 import logging
@@ -36,8 +36,13 @@ async def handler():
     if payload is None:
         return {'message': 'not a valid webhook'}, 400, {}
 
-
     logging.info("Received the following webhook payload: \n%s", json.dumps(payload, indent=4))
+
+    #signature = request.headers.get('X-Hub-Signature')
+    
+    secret = relay.get(D.webhooktoken)
+
+    logging.info("got the secret: \n%s", secret)
 
     relay.events.emit({'webhook_contents': payload})
 
