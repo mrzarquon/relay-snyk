@@ -29,3 +29,43 @@ steps:
   spec:
     parameters:
       message: !Parameter message
+
+
+parameters:
+  projects:
+    description: comma separated list of project_ids to filter, empty = all
+  severities:
+    description: csv of high,medium,low 
+  exploitMaturity:
+    description: mature,proof-of-concept,no-known-exploit,no-data
+  types:
+    description: vuln,license
+  patched:
+    description: true,false
+  ignored:
+    description: true,false
+  priorityMin:
+    description: minimum priority 0-100
+  priorityMax:
+    description: maximum priority 0-100
+  event:
+    description: webhook event itself
+
+triggers:
+  - name: snyk-snapshot-05
+    source:
+      type: webhook
+      image: relaysh/core:latest-python
+      inputFile: https://raw.githubusercontent.com/mrzarquon/relay-snyk/in_progress_experiments/triggers/snyk-trigger-issues/handler.py
+      spec:
+        webhooktoken: !Secret webhooktoken
+    binding:
+      parameters:
+        event: !Data event
+steps:
+  - name: my-python-notification
+    image: relaysh/core:latest-python
+    inputFile: https://raw.githubusercontent.com/mrzarquon/relay-snyk/in_progress_experiments/steps/parse/step.py
+    spec:
+      event: !Parameter event
+      webhooktoken: !Secret webhooktoken
