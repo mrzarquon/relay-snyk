@@ -17,19 +17,17 @@ logging.getLogger().setLevel(logging.INFO)
 relay = Interface()
 app = Quart('snyk-trigger-issues')
 
-def verify_signature(payload, secret: str, signature: str) -> bool:
+def verify(payload, secret, signature):
     signature=signature.split('=')[1]
+
     payload = json.dumps(payload)
     
-    # payload is converted to a dict for us but we need it as raw text
-    logging.info("plaintext payload:\n%s", payload)
-
     payload = payload.encode()
     secret = secret.encode()
     
     digest = hmac.new(key=secret, msg=payload, digestmod=hashlib.sha256).hexdigest()
 
-    return hmac.compare_digest(signature, digest)
+    return signature == digest
 
 @app.route('/', methods=['POST'])
 async def handler():
@@ -37,13 +35,13 @@ async def handler():
     payload = await request.get_json()
     if payload is None:
         return {'message': 'not a valid webhook'}, 400, {}
-    
+
 
     signature = request.headers.get('X-Hub-Signature')
     
     secret = relay.get(D.webhooktoken)
 
-    if verify_signature(payload, secret, signature ) == False:
+    if verify(payload, secret, signature ) == False:
         logging.info("Invalid checksum of: %s", signature)
         return {'message': 'invalid'}, 400, {}
     else:
