@@ -46,7 +46,7 @@ async def handler():
         logging.info("Valid checksum of: %s", signature)
 
 
-    relay.events.emit({'webhook_contents': payload})
+    relay.events.emit({'event': payload})
 
     return {'message': 'success'}, 200, {}
 
