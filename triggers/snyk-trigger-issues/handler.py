@@ -27,7 +27,7 @@ def verify_signature(payload, secret, signature):
     
     digest = hmac.new(key=secret, msg=payload, digestmod=hashlib.sha256).hexdigest()
 
-    return signature == digest
+    return hmac.compare_digest(signature, digest)
 
 @app.route('/', methods=['POST'])
 async def handler():
@@ -41,6 +41,7 @@ async def handler():
     secret = relay.get(D.webhooktoken)
 
     if verify_signature(payload, secret, signature ) == False:
+        logging.info("Invalid checksum of: %s", signature)
         return {'message': 'invalid'}, 400, {}
     else:
         logging.info("Valid checksum of: %s", signature)
