@@ -1,5 +1,5 @@
-apiVersion: integration/v1
-kind: Integration
+apiVersion: v1
+kind: Workflow
 name: template
 channel: stable
 version: v20200514

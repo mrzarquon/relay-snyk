@@ -1,4 +1,4 @@
-apiVersion: integration/v1
+apiVersion: v1
 kind: Trigger
 name: template
 version: 1

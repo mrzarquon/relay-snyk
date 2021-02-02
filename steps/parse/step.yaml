@@ -1,6 +1,6 @@
 # Step metadata example - full description at:
 # https://github.com/puppetlabs/relay-rfcs/blob/master/content/0006-integration-layout/rfc.md#common-metadata
-apiVersion: integration/v1
+apiVersion: v1
 kind: Step
 name: template
 version: 1
@@ -52,13 +52,14 @@ schemas:
    # spec:
    #   source: file
    #   file: spec.schema.json
- outputs:
-   $schema: http://json-schema.org/draft-07/schema#
-    type: object
-    properties:
-      output:
-        type: string
-        description: The message that would be emitted
+
+outputs:
+  $schema: http://json-schema.org/draft-07/schema#
+  type: object
+  properties:
+    output:
+      type: string
+      description: The message that would be emitted
    # external files are also supported for outputs
    # spec:
    #   source: file
