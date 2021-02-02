@@ -1,4 +1,4 @@
-#!python
+#!/usr/local/bin/python
 
 # simple webhook responder that just puts the entire
 # content of the webhook into a parameter for use by a 
@@ -17,6 +17,8 @@ logging.getLogger().setLevel(logging.INFO)
 relay = Interface()
 app = Quart('snyk-trigger-issues')
 
+foo = {}
+
 def verify_signature(payload, secret, signature):
     signature=signature.split('=')[1]
     
@@ -34,11 +36,10 @@ async def handler():
     if payload is None:
         return {'message': 'not a valid webhook'}, 400, {}
 
-    logging.info("Received the following webhook payload: \n%s", json.dumps(payload, indent=4)
 
-    relay.events.emit({
-          'webhook_contents': payload
-      })
+    logging.info("Received the following webhook payload: \n%s", json.dumps(payload, indent=4))
+
+    relay.events.emit({'webhook_contents': payload})
 
     return {'message': 'success'}, 200, {}
 
