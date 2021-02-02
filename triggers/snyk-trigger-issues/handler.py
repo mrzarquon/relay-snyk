@@ -36,13 +36,15 @@ async def handler():
     if payload is None:
         return {'message': 'not a valid webhook'}, 400, {}
 
-    #signature = request.headers.get('X-Hub-Signature')
+    signature = request.headers.get('X-Hub-Signature')
     
     secret = relay.get(D.webhooktoken)
 
-    logging.info("got the secret: \n%s", secret)
+    if verify_signature(payload, secret, signature ) == False:
+        return {'message': 'invalid'}, 400, {}
+    else:
+        logging.info("Valid checksum of: %s", signature)
 
-    payload['secret'] = secret
 
     relay.events.emit({'webhook_contents': payload})
 
