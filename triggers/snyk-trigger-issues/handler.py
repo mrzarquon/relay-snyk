@@ -1,3 +1,5 @@
+#!python
+
 # simple webhook responder that just puts the entire
 # content of the webhook into a parameter for use by a 
 # workflow.
