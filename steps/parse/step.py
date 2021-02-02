@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!python
 
 from relay_sdk import Interface, Dynamic as D
 
