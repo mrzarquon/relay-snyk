@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from relay_sdk import Interface, Dynamic as D
 
 import json
