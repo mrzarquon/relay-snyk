@@ -17,7 +17,7 @@ logging.getLogger().setLevel(logging.INFO)
 relay = Interface()
 app = Quart('snyk-trigger-issues')
 
-def verify_signature(payload, secret, signature) -> bool:
+def verify_signature(payload, secret: str, signature: str) -> bool:
     signature=signature.split('=')[1]
     
     payload = payload.encode()
@@ -33,16 +33,22 @@ async def handler():
     payload = await request.get_json()
     if payload is None:
         return {'message': 'not a valid webhook'}, 400, {}
+    
+    
+    # payload is converted to a dict for us but we need it as raw text
+    payload_str = json.dumps(payload)
+
+    logging.info("plaintext payload:\n%s", payload_str)
 
     signature = request.headers.get('X-Hub-Signature')
     
     secret = relay.get(D.webhooktoken)
 
-    #if verify_signature(payload, secret, signature ) == False:
-    #    logging.info("Invalid checksum of: %s", signature)
-    #    return {'message': 'invalid'}, 400, {}
-    #else:
-    #    logging.info("Valid checksum of: %s", signature)
+    if verify_signature(payload_str, secret, signature ) == False:
+        logging.info("Invalid checksum of: %s", signature)
+        return {'message': 'invalid'}, 400, {}
+    else:
+        logging.info("Valid checksum of: %s", signature)
 
 
     relay.events.emit({'event': payload})
