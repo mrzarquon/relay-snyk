@@ -19,7 +19,11 @@ app = Quart('snyk-trigger-issues')
 
 def verify_signature(payload, secret: str, signature: str) -> bool:
     signature=signature.split('=')[1]
+    payload = json.dumps(payload)
     
+    # payload is converted to a dict for us but we need it as raw text
+    logging.info("plaintext payload:\n%s", payload)
+
     payload = payload.encode()
     secret = secret.encode()
     
@@ -34,11 +38,6 @@ async def handler():
     if payload is None:
         return {'message': 'not a valid webhook'}, 400, {}
     
-    
-    # payload is converted to a dict for us but we need it as raw text
-    payload_str = json.dumps(payload)
-
-    logging.info("plaintext payload:\n%s", payload_str)
 
     signature = request.headers.get('X-Hub-Signature')
     
