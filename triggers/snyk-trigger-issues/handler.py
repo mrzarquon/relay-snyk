@@ -43,7 +43,7 @@ async def handler():
     
     secret = relay.get(D.webhooktoken)
 
-    if verify_signature(payload_str, secret, signature ) == False:
+    if verify_signature(payload, secret, signature ) == False:
         logging.info("Invalid checksum of: %s", signature)
         return {'message': 'invalid'}, 400, {}
     else:
