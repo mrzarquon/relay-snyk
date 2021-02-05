@@ -6,7 +6,13 @@ import json
 import logging
 
 def extract(d: list, keep: list) -> list:
-    return ((k, d[k]) for k in keep if k in d)
+    issues = []
+    
+    for issue in d:
+        if issue['issueData']['severity'] in keep:
+            issues.append(issue)
+    
+    return issues
 
 logging.getLogger().setLevel(logging.INFO)
 
