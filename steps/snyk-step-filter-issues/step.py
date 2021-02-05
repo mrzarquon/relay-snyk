@@ -31,6 +31,6 @@ severities = severities.split(',')
 
 issues = extract(event['newIssues'],severities)
 
-logging.info("filtered snyk issues:\n{}".format(issues))
+logging.info("filtered snyk issues:\n{}".format(json.dumps(issues,indent=4)))
 
 relay.outputs.set('issues',issues)
