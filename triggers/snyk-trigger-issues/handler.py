@@ -47,8 +47,8 @@ async def handler():
     else:
         logging.info("Valid checksum of: %s", signature)
 
-
-    relay.events.emit({'event': payload})
+    if len(payload['newIssues']) > 0:
+        relay.events.emit({'event': payload})
 
     return {'message': 'success'}, 200, {}
 

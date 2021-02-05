@@ -9,7 +9,10 @@ logging.getLogger().setLevel(logging.INFO)
 
 relay = Interface()
 
-project = relay.get(D.event)
+event = relay.get(D.event)
+
+projects = relay.get(D.projects)
+projects = projects.split(',')
 
 formatted_json = json.dumps(project, indent=4, sort_keys=True)
 
